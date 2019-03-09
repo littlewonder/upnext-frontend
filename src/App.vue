@@ -104,33 +104,55 @@ export default {
         channel: "Zee Music Company",
         to: "Vivek Sharma",
         from: "Abhishek",
-        url: "https://www.youtube.com/watch?v=WrY4qQEBTHM"
+        url: "https://www.youtube.com/watch?v=WrY4qQEBTHM",
+        upvotes: 20,
+        ifPlayed: true
       },
       queue: [
         {
           song: "Slow Dancing in a Burning room",
           channel: "John Mayer Vevo",
-          upvotes: 12
+          upvotes: 12,
+          to: "Vivek Sharma",
+          from: "Abhishek",
+          url: "https://www.youtube.com/watch?v=WrY4qQEBTHM",
+          ifPlayed: false
         },
         {
           song: "BOHEMIA - Umeed (Official Music Video)",
           channel: "Bohemia",
-          upvotes: 9
+          upvotes: 9,
+          to: "Vivek Sharma",
+          from: "Abhishek",
+          url: "https://www.youtube.com/watch?v=WrY4qQEBTHM",
+          ifPlayed: false
         },
         {
           song: "Prateek Kuhad - Tum Jab Paas",
           channel: "JioSaavn",
-          upvotes: 3
+          upvotes: 3,
+          to: "Vivek Sharma",
+          from: "Abhishek",
+          url: "https://www.youtube.com/watch?v=WrY4qQEBTHM",
+          ifPlayed: false
         },
         {
           song: "Kyu (Prod. by Sez On The Beat) | Seedhe Maut ...",
           channel: "Seedhe Maut",
-          upvotes: 5
+          upvotes: 5,
+          to: "Vivek Sharma",
+          from: "Abhishek",
+          url: "https://www.youtube.com/watch?v=WrY4qQEBTHM",
+          ifPlayed: false
         },
         {
           song: "Pink Floyd - Comfortably Numb [HD]",
           channel: "David Gilmour",
-          upvotes: 2
+          upvotes: 2,
+          to: "Vivek Sharma",
+          from: "Abhishek",
+          url: "https://www.youtube.com/watch?v=WrY4qQEBTHM",
+          ifPlayed: false
         }
       ],
       submissions: [
@@ -138,18 +160,30 @@ export default {
           song:
             "Full Power (Yungsta x Frappe Ash) - NaNa (Prod. by Stunnah Beatz...",
           channel: "Frappe Ash",
-          ifPlayed: true
+          ifPlayed: true,
+          upvotes: 2,
+          to: "Vivek Sharma",
+          from: "Abhishek",
+          url: "https://www.youtube.com/watch?v=WrY4qQEBTHM"
         },
         {
           song: "Bol Beta | Yungsta | Encore ABJ | Elements | 2018",
           channel: "Yungsta (Full Power)",
-          ifPlayed: false
+          ifPlayed: false,
+          upvotes: 2,
+          to: "Vivek Sharma",
+          from: "Abhishek",
+          url: "https://www.youtube.com/watch?v=WrY4qQEBTHM"
         },
         {
           song:
             "Full Power (Yungsta x Frappe Ash) - NaNa (Prod. by Stunnah Beatz...",
           channel: "Frappe Ash",
-          ifPlayed: false
+          ifPlayed: false,
+          upvotes: 2,
+          to: "Vivek Sharma",
+          from: "Abhishek",
+          url: "https://www.youtube.com/watch?v=WrY4qQEBTHM"
         }
       ]
     };
@@ -256,8 +290,7 @@ h3 {
   color: rgba(255, 255, 255, 0.6);
 }
 .nowplaying {
-  grid-column-start: 1;
-  grid-column-end: 3;
+  margin-top: 2.5em;
   p {
     font-family: Inter;
     font-style: normal;
@@ -334,12 +367,12 @@ h3 {
   }
   .link {
     margin-bottom: 1.5em;
-    input{
+    input {
       width: 100%;
     }
   }
-  .dedicate{
-    input{
+  .dedicate {
+    input {
       width: 53%;
     }
   }
@@ -430,17 +463,17 @@ h3 {
 }
 .container {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   width: 100%;
-  .bottom{
+  .bottom {
     display: flex;
     flex-direction: row;
-    .aside{
+    .aside {
       display: flex;
       flex-direction: column;
       width: 50%;
     }
-    .queue{
+    .queue {
       width: 50%;
     }
   }
