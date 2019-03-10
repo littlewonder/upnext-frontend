@@ -18,6 +18,10 @@
     <div class="container">
       <div class="nowplaying">
         <h1>Now Playing</h1>
+        <div id="player" style="opacity: 0;">
+          <iframe id="ytplayer" type="text/html" width="114" height="64" :src="getCurrentSong"/>
+          frameborder="0" allowfullscreen>
+        </div>
         <div class="player">
           <div class="image">
             <img :src="getCurrentThumbnail">
@@ -42,9 +46,9 @@
           <div class="songlist">
             <div class="song" v-for="(item,i) in queue" v-bind:key="i">
               <div class="upvotes">
-                <img src="./assets/upvote.svg">
+                <img src="./assets/upvote.svg" class="upvote">
                 <p>{{item.upvotes}}</p>
-                <img src="./assets/downvote.svg">
+                <img src="./assets/downvote.svg" class="downvote">
               </div>
               <div class="details">
                 <h3>{{item.song}}</h3>
@@ -195,6 +199,13 @@ export default {
     getCurrentThumbnail: function() {
       let videoId = this.current.url.split("=")[1];
       return "https://img.youtube.com/vi/" + videoId + "/0.jpg";
+    },
+    getCurrentSong: function() {
+      let songId = this.current.url.split("=")[1];
+      let reqUrl = "https://www.youtube.com/embed/" +
+        songId +
+        "?modestbranding=1&autoplay=1&showinfo=0&color=white&iv_load_policy=3";
+      return reqUrl;
     }
   }
 };
