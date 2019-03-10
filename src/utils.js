@@ -1,6 +1,7 @@
 // const BACKEND_URL = "http://localhost:5000"
 const BACKEND_URL = '/api'
 
+
 function getAuthHeaders() {
   return new Headers({
     'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
@@ -105,6 +106,7 @@ async function upNextSongs() {
 }
 
 
+
 module.exports = {
   performLogin,
   getAuthToken,
@@ -112,5 +114,7 @@ module.exports = {
   mySubmissions,
   upvoteLink,
   downvoteLink,
-  submissionsByMe
+  submissionsByMe,
+  nowPlaying,
+  upNextSongs,
 }
