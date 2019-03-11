@@ -73,10 +73,10 @@ async function downvoteLink(linkId) {
   let formdata = new FormData()
   formdata.append('link_id', linkId)
 
-  let response = await fetch('/api/link/upvote', {
+  let response = await fetch('/api/link/downvote', {
     method: 'POST',
     headers: getAuthHeaders(),
-    body: body
+    body: formdata
   })
   return response
 }
