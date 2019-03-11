@@ -1,11 +1,7 @@
 <template>
           <div class="request">
             <h1>Request Song
-                <span class="loading" v-if="saving">
-                    <span>.</span>
-                    <span>.</span>
-                    <span>.</span>
-                </span>
+                <loading-ellipsis v-if="saving" />
             </h1>
             <div class="link">
               <input v-model="url" type="text" placeholder="https://www.youtube.com/watch?v=yOJQyZJcRso">
@@ -20,8 +16,13 @@
 
 <script>
 import api from '../api'
+import LoadingEllipsis from './LoadingEllipsis'
+
 export default {
     name: 'SubmitLink',
+    components:{
+        LoadingEllipsis,
+    },
     data() {
         return {
             url: '',
