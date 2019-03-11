@@ -4,12 +4,12 @@ const BACKEND_URL = '/api'
 
 function getAuthHeaders() {
   return new Headers({
-    'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+    'Authorization': `Bearer ${sessionStorage.getItem('jwtToken')}`
   })
 }
 
 async function performLogin(firstname, lastname, userid) {
-  let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {
+  let currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || {
     user_id: userid || '101',
     firstname: firstname || 'Abhishek',
     lastname: lastname || 'Sharma'
@@ -26,8 +26,8 @@ async function performLogin(firstname, lastname, userid) {
   })
   let respJson = await response.json()
 
-  localStorage.setItem('currentUser', JSON.stringify(currentUser))
-  localStorage.setItem('jwtToken', respJson['token'])
+  sessionStorage.setItem('currentUser', JSON.stringify(currentUser))
+  sessionStorage.setItem('jwtToken', respJson['token'])
 }
 
 async function getAuthToken() {

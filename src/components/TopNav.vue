@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      username: 'Your name        ',
+      username: 'Your name',
       loggedIn: false,
     }
   },
@@ -41,11 +41,21 @@ export default {
   methods: {
     async performLogin() {
       this.loggedIn = false
-
-      let firstname = this.username.split(' ')[0],
-          lastname = this.username.split(' ')[1],
-          userid = String(Math.round(Math.random() * 1000))
+      
+      let firstname, lastname, userid
+      
+      if (!sessionStorage.currentUser) {
+        firstname = 'Himanshu'
+        lastname = 'Shekhar'
+        userid = '101'
+      } else {
+        firstname = this.username.split(' ')[0],
+        lastname = this.username.split(' ')[1],
+        userid = String(Math.round(Math.random() * 1000))
+      }
+      
       await api.performLogin(firstname, lastname, userid)
+      this.username = `${firstname} ${lastname}`
 
       this.loggedIn = true
     },
