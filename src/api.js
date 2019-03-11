@@ -54,7 +54,7 @@ async function mySubmissions() {
   let response = await fetch('/api/link/by_me', {
     headers: getAuthHeaders()
   })
-  return response.json()
+  return response
 }
 
 async function upvoteLink(linkId) {
@@ -86,7 +86,7 @@ async function submissionsByMe() {
     headers: getAuthHeaders(),
     method: 'GET'
   })
-  return response.json()
+  return response
 }
 
 async function nowPlaying() {

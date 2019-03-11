@@ -2,14 +2,14 @@
     <div class="submissions">
     <h1>My Submissions</h1>
     <div class="list">
-        <div class="submission" v-for="(sub,k) in submissions" v-bind:key="k">
+        <div class="submission" v-for="(link ,k) in submissions" v-bind:key="k">
         <div class="status">
-            <img src="../assets/played.svg" v-if="(sub.ifPlayed)">
-            <img src="../assets/unplayed.svg" v-else>
+            <img src="../assets/unplayed.svg" v-if="link.is_expired">
+            <img src="../assets/played.svg" v-else>
         </div>
         <div class="subdet">
-            <h3>{{sub.song}}</h3>
-            <h4>{{sub.channel}}</h4>
+            <h3>{{link.title}}</h3>
+            <h4>{{link.channel_name}}</h4>
         </div>
         </div>
     </div>
@@ -17,42 +17,31 @@
 </template>
 
 <script>
+import api from '../api'
+
 export default {
     name: 'Submissions',
     data() {
-        return {
-            submissions: [
-                {
-                song:
-                    "Full Power (Yungsta x Frappe Ash) - NaNa (Prod. by Stunnah Beatz...",
-                channel: "Frappe Ash",
-                ifPlayed: true,
-                upvotes: 2,
-                to: "Vivek Sharma",
-                from: "Abhishek",
-                url: "https://www.youtube.com/watch?v=WrY4qQEBTHM"
-                },
-                {
-                song: "Bol Beta | Yungsta | Encore ABJ | Elements | 2018",
-                channel: "Yungsta (Full Power)",
-                ifPlayed: false,
-                upvotes: 2,
-                to: "Vivek Sharma",
-                from: "Abhishek",
-                url: "https://www.youtube.com/watch?v=WrY4qQEBTHM"
-                },
-                {
-                song:
-                    "Full Power (Yungsta x Frappe Ash) - NaNa (Prod. by Stunnah Beatz...",
-                channel: "Frappe Ash",
-                ifPlayed: false,
-                upvotes: 2,
-                to: "Vivek Sharma",
-                from: "Abhishek",
-                url: "https://www.youtube.com/watch?v=WrY4qQEBTHM"
-                }
-            ]
+      return {
+        submissions: [],
+        apiPollInterval: null
+      }
+    },
+    created() {
+      const self = this
+      this.apiPollInterval = setInterval(async() => {
+        let response = await api.submissionsByMe()
+        let respjson = await response.json()
+        for (let i = 0; i < respjson.length; i++) {
+          let lid = String(respjson.links[i].link_id)
+          respjson.links[i]['my_vote'] = respjson.votes[lid] || 0
         }
+        self.submissions = respjson.links
+      }, 2000)
+    },
+
+    beforeDestroy() {
+      clearInterval(this.apiPollInterval)
     }
 }
 </script>
