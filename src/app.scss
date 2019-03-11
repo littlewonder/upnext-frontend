@@ -41,6 +41,7 @@
         font-weight: normal;
         line-height: normal;
         font-size: 0.875em;
+        min-width: 15ch;
         color: #09d8cc;
       }
       button {
@@ -186,6 +187,7 @@ h3 {
     background: transparent;
     padding: 0.5em 0.75em;
     margin-left: 1em;
+    cursor: pointer;
   }
 }
 .queue {
