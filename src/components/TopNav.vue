@@ -6,7 +6,7 @@
       <div class="login">
         <div class="dp">{{getLetter}}</div>
         <div class="info">
-          <p>{{login}}</p>
+          <p>{{username}}</p>
           <button>Sign Out</button>
         </div>
       </div>
@@ -15,17 +15,24 @@
 
 
 <script>
+import api from '../api'
+
 export default {
-    name: 'TopNav',
-    data() {
-      return {
-        login: 'Abhishek SHarma'
-      }
+  name: 'TopNav',
+  data() {
+    return {}
+  },
+  async created() {
+    await api.performLogin()
+  },
+  computed: {
+    getLetter: function() {
+      return this.username.slice(0, 1).toUpperCase();
     },
-    computed: {
-        getLetter: function() {
-        return this.login.slice(0, 1).toUpperCase();
-        }
+    username: function() {
+      let user = JSON.parse(localStorage.getItem('currentUser'))
+      return `${user.firstname} ${user.lastname}`
     }
+  }
 }
 </script>
