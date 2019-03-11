@@ -66,7 +66,7 @@ async function upvoteLink(linkId) {
     headers: getAuthHeaders(),
     body: formdata
   })
-  return response.json()
+  return response
 }
 
 async function downvoteLink(linkId) {
@@ -78,7 +78,7 @@ async function downvoteLink(linkId) {
     headers: getAuthHeaders(),
     body: body
   })
-  return response.json()
+  return response
 }
 
 async function submissionsByMe() {
