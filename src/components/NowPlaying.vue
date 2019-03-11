@@ -15,10 +15,13 @@
         <div class="progress"></div>
         <p class="dedication">
           <img src="../assets/dedicate.svg">
-          Dedicated to {{nowPlaying.submitted_by.firstname}} {{nowPlaying.submitted_by.lastname}} from {{nowPlaying.link.dedicated_to}}
+          Dedicated to {{nowPlaying.link.dedicated_to}} from {{nowPlaying.submitted_by.firstname}}
         </p>
       </div>
     </div>
+  </div>
+  <div class="nowplaying" v-else>
+    <h1>Nothing to play :( </h1>
   </div>
 </template>
 

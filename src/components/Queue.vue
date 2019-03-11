@@ -17,6 +17,10 @@
         </div>
       </div>
     </div>
+    <div v-else>
+      <br />
+      <h3>Empty queue. Request song to make everyone listen to it. </h3>
+    </div>
   </div>
 </template>
 
