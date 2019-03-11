@@ -8,11 +8,11 @@ function getAuthHeaders() {
   })
 }
 
-async function performLogin() {
+async function performLogin(firstname, lastname, userid) {
   let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {
-    user_id: '101',
-    firstname: 'Abhishek',
-    lastname: 'Sharma'
+    user_id: userid || '101',
+    firstname: firstname || 'Abhishek',
+    lastname: lastname || 'Sharma'
   }
 
   let formData = new FormData()

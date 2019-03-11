@@ -6,8 +6,9 @@
       <div class="login">
         <div class="dp">{{getLetter}}</div>
         <div class="info">
-          <p>{{username}}</p>
-          <button>Sign Out</button>
+          <p contenteditable="true">{{username}}</p>
+          <button @click="performLogin">Sign In</button>
+          <loading-ellipsis v-if="!loggedIn" />
         </div>
       </div>
     </div>
@@ -15,24 +16,39 @@
 
 
 <script>
-import api from '../api'
+  import api from '../api'
+  import LoadingEllipsis from './LoadingEllipsis'
 
 export default {
   name: 'TopNav',
+  components: {
+    LoadingEllipsis
+  },
   data() {
-    return {}
+    return {
+      username: 'Your name        ',
+      loggedIn: false,
+    }
   },
   async created() {
-    await api.performLogin()
+    await this.performLogin()
   },
   computed: {
     getLetter: function() {
       return this.username.slice(0, 1).toUpperCase();
     },
-    username: function() {
-      let user = JSON.parse(localStorage.getItem('currentUser'))
-      return `${user.firstname} ${user.lastname}`
-    }
+  },
+  methods: {
+    async performLogin() {
+      this.loggedIn = false
+
+      let firstname = this.username.split(' ')[0],
+          lastname = this.username.split(' ')[1],
+          userid = String(Math.round(Math.random() * 1000))
+      await api.performLogin(firstname, lastname, userid)
+
+      this.loggedIn = true
+    },
   }
 }
 </script>
