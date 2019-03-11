@@ -41,7 +41,7 @@ export default {
       }
 
       self.queue = resp.links
-    }, 1000)
+    }, 3000)
   },
   beforeDestroy() {
     clearInterval(this.apiPollInterval)
