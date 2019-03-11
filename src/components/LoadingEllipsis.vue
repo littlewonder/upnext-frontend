@@ -32,6 +32,9 @@ export default {
   animation-duration: 1.4s;
   animation-iteration-count: infinite;
   animation-fill-mode: both;
+  color: white;
+  font-weight: bold;
+  font-size: 2em;
 }
 
 .loading span:nth-child(2) {
