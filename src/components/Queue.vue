@@ -27,13 +27,11 @@ export default {
     return {
       queue: [],
       apiPollInterval: null,
-      loading: false,
     }
   },
   created() {
     const self = this
     this.apiPollInterval = setInterval(async() => {
-      self.loading = true
 
       let resp = await api.upNextSongs()
       for (let i = 0; i < resp.links.length; i++) {
@@ -42,8 +40,6 @@ export default {
       }
 
       self.queue = resp.links
-
-      self.loading = false
     }, 3000)
   },
   beforeDestroy() {
