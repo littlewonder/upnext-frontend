@@ -47,7 +47,7 @@ async function requestSong(url, dedicated_to) {
     body: formData,
     headers: getAuthHeaders()
   })
-  return response.json()
+  return response
 }
 
 async function mySubmissions() {
