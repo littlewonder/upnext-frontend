@@ -3,8 +3,8 @@
     <h1>My Submissions</h1>
     <div class="list">
         <div class="submission" v-for="(link ,k) in submissions" v-bind:key="k">
-        <div class="status">
-            <img src="../assets/unplayed.svg" v-if="link.is_expired">
+          <div class="status">
+            <img src="../assets/unplayed.svg" v-if="!(link.is_expired)">
             <img src="../assets/played.svg" v-else>
         </div>
         <div class="subdet">
@@ -32,11 +32,7 @@ export default {
       this.apiPollInterval = setInterval(async() => {
         let response = await api.submissionsByMe()
         let respjson = await response.json()
-        for (let i = 0; i < respjson.length; i++) {
-          let lid = String(respjson.links[i].link_id)
-          respjson.links[i]['my_vote'] = respjson.votes[lid] || 0
-        }
-        self.submissions = respjson.links
+        self.submissions = respjson
       }, 2000)
     },
 
