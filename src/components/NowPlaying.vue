@@ -33,18 +33,10 @@ export default {
       player_time: 0,
       nextUpdateAt: 0,
       apiPollInterval: null,
-      current: {
-        song: "Karmasutra - Official Music Video | Karma | Deep Kalsi",
-        channel: "Zee Music Company",
-        to: "Vivek Sharma",
-        from: "Abhishek",
-        url: "https://www.youtube.com/watch?v=WrY4qQEBTHM",
-        upvotes: 20,
-        ifPlayed: true
-      }
     }
   },
   created() {
+    // TODO : replace this impl - instead of replacing iframe, use the iframe api
     console.log('iframe player created')
     const self = this
     this.apiPollInterval = setInterval(async () => {
