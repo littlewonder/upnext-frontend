@@ -46,6 +46,10 @@ export default {
       let curtime = Date.now() / 1000
       if (curtime > self.nextUpdateAt - 2) { // update 2 seconds earlier to consider network delay
         let radiostate = await api.nowPlaying()
+        if (!radiostate.link) {
+          self.nowPlaying = null
+          return
+        }
         console.log('updating track > ', radiostate)
         self.nextUpdateAt = (new Date(
           Date.now() + (radiostate.link.duration - radiostate.player_time) * 1000

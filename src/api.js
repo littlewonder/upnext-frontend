@@ -8,17 +8,12 @@ function getAuthHeaders() {
   })
 }
 
-async function performLogin(firstname, lastname, userid) {
-  let currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || {
-    user_id: userid || '101',
-    firstname: firstname || 'Abhishek',
-    lastname: lastname || 'Sharma'
-  }
-
+async function performLogin(firstname, lastname, userid, email) {
   let formData = new FormData()
-  formData.append('user_id', '101')
-  formData.append('firstname', 'Abhishek')
-  formData.append('lastname', 'Sharma')
+  formData.append('user_id', userid)
+  formData.append('firstname', firstname)
+  formData.append('lastname', lastname)
+  formData.append('email', email)
 
   let response = await fetch(`/api/login`,{
     method: 'POST',
@@ -26,15 +21,21 @@ async function performLogin(firstname, lastname, userid) {
   })
   let respJson = await response.json()
 
-  sessionStorage.setItem('currentUser', JSON.stringify(currentUser))
+  sessionStorage.setItem('currentUser', JSON.stringify({
+    firstname: firstname,
+    lastname: lastname,
+    userid: userid
+  }))
   sessionStorage.setItem('jwtToken', respJson['token'])
 }
 
+function signOut() {
+  sessionStorage.removeItem('currentUser')
+  sessionStorage.removeItem("jwtToken")
+}
+
 async function getAuthToken() {
-  if (localStorage.getItem('jwtToken') == null) {
-    await performLogin()
-  }
-  return localStorage.getItem('jwtToken')
+  return sessionStorage.getItem('jwtToken')
 }
 
 async function requestSong(url, dedicated_to) {
@@ -110,6 +111,7 @@ async function upNextSongs() {
 module.exports = {
   performLogin,
   getAuthToken,
+  signOut,
   requestSong,
   mySubmissions,
   upvoteLink,

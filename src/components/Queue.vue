@@ -43,6 +43,10 @@ export default {
       if (self.apiLocked) return;
       
       let resp = await api.upNextSongs()
+      if (!resp.links) {
+        self.queue = []
+        return
+      }
       for (let i = 0; i < resp.links.length; i++) {
         let lid = String(resp.links[i].link_id)
         resp.links[i]['my_vote'] = resp.votes[lid] || 0

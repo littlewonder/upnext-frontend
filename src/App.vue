@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <!--Navigation Bar-->
-    <TopNav />
+    <TopNav :isLoggedIn="loggedIn" />
 
     <!--Navigation Bar-->
-    <div class="container">
+    <div class="container" v-if="loggedIn">
       <!--Now Playing-->
       <NowPlaying />
 
@@ -24,11 +24,15 @@
       </div>
       <!--My Submissions-->
     </div>
+    <div class="container" v-else>
+      <SignInContainer class="requirelogin" />
+    </div>
   </div>
 </template>
 
 <script>
 import "reset-css";
+import SignInContainer from './components/SignInContainer'
 import NowPlaying from './components/NowPlaying'
 import Queue from './components/Queue'
 import TopNav from './components/TopNav'
@@ -37,11 +41,10 @@ import SubmitLink from './components/SubmitLink'
 
 var api = require('./api')
 
-console.log(NowPlaying, Queue)
-
 export default {
   name: "app",
   components: {
+    SignInContainer,
     TopNav,
     NowPlaying,
     Queue,
@@ -50,14 +53,24 @@ export default {
   },
   data() {
     return {
-      login: "Abhishek Sharma",
-      submissions: []
+      loggedIn: false,
     };
   },
   computed: {
     getLetter: function() {
       return this.login.slice(0, 1).toUpperCase();
     }
+  },
+  created() {
+    const self = this
+    let interval = setInterval(() => {
+      if (sessionStorage.jwtToken) {
+        // clearInterval(interval)
+        self.loggedIn = true
+      } else {
+        self.loggedIn = false
+      }
+    }, 1000)
   }
 };
 </script>
