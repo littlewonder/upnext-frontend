@@ -77,7 +77,6 @@ export default {
         that.submitted_by.firstname = res.submitted_by.firstname
         that.submitted_by.lastname = res.submitted_by.lastname
         that.link = link
-        console.log(that.nextUpdateIn, val, that.link, that.playerTime)
       }
     })
     // api.subscribeTo('nowPlaying', (link) => {

@@ -23,25 +23,21 @@
 import api from '../api'
 
 export default {
-    name: 'Submissions',
-    data() {
-      return {
-        submissions: [],
-        apiPollInterval: null
-      }
-    },
-    created() {
-      const self = this
-      this.apiPollInterval = setInterval(async() => {
-        let response = await api.submissionsByMe()
-        let respjson = await response.json()
-        self.submissions = respjson
-      }, 2000)
-    },
-
-    beforeDestroy() {
-      clearInterval(this.apiPollInterval)
+  name: 'Submissions',
+  data() {
+    return {
+      submissions: [],
     }
+  },
+  created() {
+    api.submissionsByMe((data) => {
+      this.submissions = data
+    })
+  },
+  
+  beforeDestroy() {
+    // clearInterval(this.apiPollInterval)
+  }
 }
 </script>
 

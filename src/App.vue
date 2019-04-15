@@ -6,7 +6,6 @@
     <!--Navigation Bar-->
     <div class="container" v-if="loggedIn">
       <!--Now Playing-->
-      <!-- <NowPlaying :link="nowPlaying.link" :playerTime="nowPlaying.playerTime" /> -->
       <NowPlaying />
 
       <hr class="divider">
@@ -14,15 +13,14 @@
         <!--Queue-->
         <Queue />
 
-        <!-- uncomment this div -->
-        <!-- <div class="aside"> -->
-        <!--   <\!--Request Window-\-> -->
-        <!--   <SubmitLink /> -->
-        <!--   <hr class="divider"> -->
-        <!--   <\!--My Submissions-\-> -->
-        <!--   <Submissions /> -->
+        <div class="aside">
+          <!--Request Window-->
+          <SubmitLink />
+          <hr class="divider">
+          <!--My Submissions-->
+          <Submissions />
 
-        <!-- </div> -->
+        </div>
       </div>
       <!--My Submissions-->
     </div>

@@ -116,12 +116,25 @@ async function downvoteLink(linkId) {
   return response
 }
 
-async function submissionsByMe() {
-  let response = await fetch('/api/link/by_me', {
-    headers: getAuthHeaders(),
-    method: 'GET'
-  })
-  return response
+// this is for ReST based
+// async function submissionsByMe() {
+//   let response = await fetch('/api/link/by_me', {
+//     headers: getAuthHeaders(),
+//     method: 'GET'
+//   })
+//   return response
+// }
+
+async function submissionsByMe(cb) {
+  let evSource = new EventSource('/api/link/by_me')
+  evSource.onopen = () => console.log('subscribed to linksbyme')
+  evSource.onclose = () => console.log('closed for linksbyme')
+  evSource.onerror = () => console.log('error at linksbyme')
+  evSource.onmessage = (e) => {
+    let data = JSON.parse(e.data)
+    console.log('SSE: linksbyme')
+    cb(data)
+  }
 }
 
 async function nowPlaying() {
