@@ -56,11 +56,20 @@ export default {
     
     let that = this
     api.subscribeTo('playerTime', async (val) => {
+      if (val >= 1 << 30) {
+        that.link = null
+        return
+      }
       let curtime = Date.now() / 1000
       if (that.nextUpdateAt - curtime < 2) {
         // dont know why so many states, but abhi ke liye chal raha
         let res = await api.nowPlaying()
         let link = res.link
+        if (!link) {
+          that.link = null
+          that.nextUpdateAt = 0
+          return
+        }
         that.prevUpdateAt = curtime
         that.nextUpdateIn = link.duration
         that.nextUpdateAt = curtime + link.duration - val
