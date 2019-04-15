@@ -29,6 +29,9 @@ import api from '../api'
 
 export default {
   name: "Queue",
+  props: [
+    "updateMethod"
+  ],
   data() {
     return {
       queue: [],
@@ -38,6 +41,7 @@ export default {
   },
   created() {
     const self = this
+    return
     this.apiPollInterval = setInterval(async() => {
       
       if (self.apiLocked) return;

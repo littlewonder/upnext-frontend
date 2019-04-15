@@ -84,7 +84,8 @@ module.exports = {
     noInfo: true,
     overlay: true,
     proxy: {
-      '/api': 'http://localhost:5000'
+      '/api': 'http://localhost:5000',
+      ws: true
     },
     headers: {
       "Access-Control-Allow-Origin": "*",

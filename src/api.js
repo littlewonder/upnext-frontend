@@ -1,5 +1,14 @@
 // const BACKEND_URL = "http://localhost:5000"
 const BACKEND_URL = '/api'
+var evSource = null
+var openEventSources = []
+window.openEventSources = openEventSources
+
+window.addEventListener('beforeUnload', () => {
+  for (let src of window.openEventSources) {
+    src.close()
+  }
+})
 
 
 function getAuthHeaders() {
@@ -106,6 +115,39 @@ async function upNextSongs() {
   return response.json()
 }
 
+function subscribeTo(hooktype, cb) {
+  let evSource = new EventSource('/api/subscribe?hooktype='+hooktype)
+  evSource.onopen = () => console.log('subscribed to', hooktype)
+  evSource.onclose = () => console.log('closed for', hooktype)
+  evSource.onerror = () => console.log('error at', hooktype)
+  evSource.onmessage = (e) => {
+    let data = JSON.parse(e.data)
+    console.log('SSE:', hooktype)
+    cb(data)
+  }
+}
+
+function subscribeToEvents(nowPlayingCb, queueCb) {
+  evSource = new EventSource('/api/subscribe')
+  window.evSource = evSource
+  evSource.onopen = () => {
+    console.log('event source is open for subscription')
+  }
+  evSource.onclose = () => {
+    console.log('event source is CLOSED')
+  }
+  evSource.onmessage = (e) => {
+    let data = JSON.parse(e.data)
+    nowPlayingCb(data.now_playing, data.player_cur_time_sec)
+    queueCb(data.queue)
+  }
+
+  window.addEventListener('beforeUnload', () => {
+    console.log('closing event source')
+    evSource.close()
+  })
+}
+
 
 
 module.exports = {
@@ -119,4 +161,6 @@ module.exports = {
   submissionsByMe,
   nowPlaying,
   upNextSongs,
+  subscribeToEvents,
+  subscribeTo,
 }

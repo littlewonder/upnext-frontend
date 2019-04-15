@@ -6,6 +6,7 @@
     <!--Navigation Bar-->
     <div class="container" v-if="loggedIn">
       <!--Now Playing-->
+      <!-- <NowPlaying :link="nowPlaying.link" :playerTime="nowPlaying.playerTime" /> -->
       <NowPlaying />
 
       <hr class="divider">
@@ -13,14 +14,15 @@
         <!--Queue-->
         <Queue />
 
-        <div class="aside">
-          <!--Request Window-->
-          <SubmitLink />
-          <hr class="divider">
-          <!--My Submissions-->
-          <Submissions />
+        <!-- uncomment this div -->
+        <!-- <div class="aside"> -->
+        <!--   <\!--Request Window-\-> -->
+        <!--   <SubmitLink /> -->
+        <!--   <hr class="divider"> -->
+        <!--   <\!--My Submissions-\-> -->
+        <!--   <Submissions /> -->
 
-        </div>
+        <!-- </div> -->
       </div>
       <!--My Submissions-->
     </div>
@@ -54,6 +56,12 @@ export default {
   data() {
     return {
       loggedIn: false,
+      nowPlaying: {
+        link: null,
+        playerTime: 0
+      },
+      queue: [],
+      nextUpdateAt: 0
     };
   },
   computed: {
@@ -63,14 +71,34 @@ export default {
   },
   created() {
     const self = this
+    // let subscribed = false
+    
     let interval = setInterval(() => {
       if (sessionStorage.jwtToken) {
         // clearInterval(interval)
         self.loggedIn = true
+        
+        // subscribe to events
+        // if (!subscribed) {
+        //   api.subscribeToEvents(this.updateNowPlayingData, this.updateQueue)
+        //   subscribed = true
+        // }
+        
       } else {
         self.loggedIn = false
       }
     }, 1000)
+  },
+  methods: {
+    updateNowPlayingData(link, playerTime) {
+
+      this.nowPlaying.playerTime = playerTime
+      if (!this.nowPlaying.link)
+        this.nowPlaying.link = link
+    },
+    updateQueueData(newQ) {
+      console.log('new q is', newQ)
+    }
   }
 };
 </script>
