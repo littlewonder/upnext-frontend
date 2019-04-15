@@ -40,24 +40,18 @@ export default {
     }
   },
   created() {
-    const self = this
-    return
-    this.apiPollInterval = setInterval(async() => {
-      
-      if (self.apiLocked) return;
-      
-      let resp = await api.upNextSongs()
+    const that = this
+    api.subscribeTo('queue', (resp) => {
       if (!resp.links) {
-        self.queue = []
+        that.queue = []
         return
       }
       for (let i = 0; i < resp.links.length; i++) {
         let lid = String(resp.links[i].link_id)
         resp.links[i]['my_vote'] = resp.votes[lid] || 0
       }
-      
-      self.queue = resp.links
-    }, 3000)
+      that.queue = resp.links
+    })
   },
   beforeDestroy() {
     clearInterval(this.apiPollInterval)

@@ -56,12 +56,7 @@ export default {
   data() {
     return {
       loggedIn: false,
-      nowPlaying: {
-        link: null,
-        playerTime: 0
-      },
-      queue: [],
-      nextUpdateAt: 0
+      isLoggedInInterval: null,
     };
   },
   computed: {
@@ -71,34 +66,21 @@ export default {
   },
   created() {
     const self = this
-    // let subscribed = false
     
-    let interval = setInterval(() => {
+    this.isLoggedInInterval = setInterval(() => {
       if (sessionStorage.jwtToken) {
         // clearInterval(interval)
         self.loggedIn = true
-        
-        // subscribe to events
-        // if (!subscribed) {
-        //   api.subscribeToEvents(this.updateNowPlayingData, this.updateQueue)
-        //   subscribed = true
-        // }
         
       } else {
         self.loggedIn = false
       }
     }, 1000)
   },
+  beforeDestroy() {
+    window.clearInterval(this.isLoggedInInterval)
+  },
   methods: {
-    updateNowPlayingData(link, playerTime) {
-
-      this.nowPlaying.playerTime = playerTime
-      if (!this.nowPlaying.link)
-        this.nowPlaying.link = link
-    },
-    updateQueueData(newQ) {
-      console.log('new q is', newQ)
-    }
   }
 };
 </script>
