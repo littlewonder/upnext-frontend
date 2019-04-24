@@ -134,7 +134,7 @@ async function submissionsByMe(cb) {
   evSource.onerror = () => console.log('error at linksbyme')
   evSource.onmessage = (e) => {
     let data = JSON.parse(e.data)
-    console.log('SSE: linksbyme')
+    // console.log('SSE: linksbyme')
     cb(data)
   }
 }
@@ -162,7 +162,7 @@ function subscribeTo(hooktype, cb) {
   evSource.onerror = () => console.log('error at', hooktype)
   evSource.onmessage = (e) => {
     let data = JSON.parse(e.data)
-    console.log('SSE:', hooktype)
+    // console.log('SSE:', hooktype)
     cb(data)
   }
 }
