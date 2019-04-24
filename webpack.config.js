@@ -84,7 +84,7 @@ module.exports = {
     noInfo: true,
     overlay: true,
     proxy: {
-      '/api': 'http://localhost:5000',
+      '/api': `http://localhost:${process.env.API_PORT || 5000}`,
       ws: true
     },
     headers: {
