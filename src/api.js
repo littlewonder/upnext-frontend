@@ -4,6 +4,8 @@ var evSource = null
 var openEventSources = []
 window.openEventSources = openEventSources
 
+var tokenStorage = localStorage
+
 window.addEventListener('beforeUnload', () => {
   for (let src of window.openEventSources) {
     src.close()
@@ -36,7 +38,7 @@ function getCookie(cname) {
 
 function getAuthHeaders() {
   return new Headers({
-    'Authorization': `Bearer ${sessionStorage.getItem('jwtToken')}`
+    'Authorization': `Bearer ${tokenStorage.getItem('jwtToken')}`
   })
 }
 
@@ -53,23 +55,23 @@ async function performLogin(firstname, lastname, userid, email) {
   })
   let respJson = await response.json()
 
-  sessionStorage.setItem('currentUser', JSON.stringify({
+  tokenStorage.setItem('currentUser', JSON.stringify({
     firstname: firstname,
     lastname: lastname,
     userid: userid
   }))
-  sessionStorage.setItem('jwtToken', respJson['token'])
+  tokenStorage.setItem('jwtToken', respJson['token'])
 
   setCookie('userid', userid, 1)
 }
 
 function signOut() {
-  sessionStorage.removeItem('currentUser')
-  sessionStorage.removeItem("jwtToken")
+  tokenStorage.removeItem('currentUser')
+  tokenStorage.removeItem("jwtToken")
 }
 
 async function getAuthToken() {
-  return sessionStorage.getItem('jwtToken')
+  return tokenStorage.getItem('jwtToken')
 }
 
 async function requestSong(url, dedicated_to) {
@@ -186,9 +188,19 @@ function subscribeToEvents(nowPlayingCb, queueCb) {
   })
 }
 
+async function IsLeaderNode() {
+  let response = await fetch('/api/isLeader', {
+    method: 'GET'
+  })
+  return response.status != 417
+  // leader shall give 504 as is unreachable via webpack proxy
+}
+
 
 
 module.exports = {
+  IsLeaderNode,
+  tokenStorage,
   performLogin,
   getAuthToken,
   signOut,

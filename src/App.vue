@@ -66,7 +66,7 @@ export default {
     const self = this
     
     this.isLoggedInInterval = setInterval(() => {
-      if (sessionStorage.jwtToken) {
+      if (api.tokenStorage.jwtToken) {
         // clearInterval(interval)
         self.loggedIn = true
         

@@ -1,5 +1,8 @@
 <template>
-  <center>
+  <center v-if="isLeader">
+    <h2>I am the leader. Can't serve you :/ </h2>
+  </center>
+  <center v-else>
     <h2>Please sign in to continue</h2>
     <div ref="signinBtn" class="g-signin2"></div>
   </center>
@@ -11,7 +14,7 @@
     name: 'SignInContainer',
     data() {
       return {
-
+        isLeader: true,
       }
     },
     mounted() {
@@ -33,7 +36,12 @@
       document.head.appendChild(meta)
       document.head.appendChild(script)
     },
-    created() {
+    async created() {
+      let isLeader = await api.IsLeaderNode()
+      this.isLeader = isLeader
+      if (isLeader)
+        return
+
       const self = this
       let intv = setInterval(() => {
         if (!window.gapi) {
