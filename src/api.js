@@ -4,7 +4,7 @@ var evSource = null
 var openEventSources = []
 window.openEventSources = openEventSources
 
-var tokenStorage = localStorage
+var tokenStorage = sessionStorage
 
 window.addEventListener('beforeUnload', () => {
   for (let src of window.openEventSources) {
